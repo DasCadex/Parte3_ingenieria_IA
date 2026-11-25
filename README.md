@@ -197,3 +197,26 @@ Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., … Kie
 Mistral AI. (s. f.). *Mistral AI documentation*. https://docs.mistral.ai
 
 OpenAI. (s. f.). *OpenAI Python library* [Software]. GitHub. https://github.com/openai/openai-python
+
+
+
+
+
+EP3 · Observabilidad del agente Colegio San Pedro
+Instrumenta el agente de la EP2 (Tutor, Asistente Docente y Monitoreo) con logs estructurados, métricas, dashboard en LangSmith y recomendaciones. Las técnicas siguen los laboratorios de `RA3` (IL3.1 a IL3.4).
+Ejecutar
+Abrir `EP3_Observabilidad_Agente_San_Pedro.ipynb` en Google Colab.
+En 🔑 Secrets crear `LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL_SMALL` y activar el acceso desde el notebook. `LANGSMITH_API_KEY` es obligatorio (dashboard en LangSmith).
+Ejecutar todas las celdas en orden (`Entorno de ejecución > Ejecutar todo`).
+Salidas
+Archivo	Contenido
+`logs/agente_ep3.jsonl`	Un span por línea: `trace_id`, `span_id`, tipo (AGENT/LLM/TOOL), estado, duración, tokens
+LangSmith, proyecto `ISY1010-EP3-SanPedro`	Dashboard: pestaña Monitor y gráficos de `precision` y `consistencia`
+`docs/kpis_agente.csv`	Métricas
+`docs/hallazgos.csv`	Hallazgos y recomendaciones
+Métricas
+Latencia (p50, p95, por llamada LLM), tasa de error, recuperaciones vacías del RAG, tokens por solicitud, precisión (palabras clave esperadas), consistencia entre repeticiones y fuga de RUT hacia el LLM.
+Seguridad
+Los logs locales no guardan preguntas, respuestas, prompts, claves ni códigos de estudiantes (solo un hash). El notebook verifica esto al final. La traza raíz de LangSmith no recibe la pregunta original; las trazas hijas incluyen los prompts (datos ficticios, RUT anonimizado).
+Pruebas de software
+La celda "Pruebas de software" valida sin LLM la clasificación de errores, el registro de spans y que no se filtren claves ni RUT.
